@@ -5,547 +5,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Active ETF Monitor</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 1100px; margin: 40px auto; padding: 0 20px; color: #333; }
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; color: #333; }
     h1 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
     h2 { color: #555; margin-top: 30px; }
-    .meta { color: #666; margin: 8px 0 20px; }
+    small { font-weight: normal; font-size: 0.75em; color: #888; }
+    .badge { display: inline-block; padding: 4px 14px; border-radius: 12px; color: white; background: #dc3545; font-weight: bold; }
+    .meta { color: #666; margin: 10px 0 24px; }
+    .table-wrap { overflow-x: auto; }
     table { border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 8px; }
-    th, td { border: 1px solid #ddd; padding: 7px 10px; text-align: left; }
+    th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
     th { background: #f5f5f5; }
     tr:nth-child(even) { background: #fafafa; }
-    .num  { text-align: right; }
-    .up   { color: #16a34a; font-weight: bold; }
-    .dn   { color: #dc2626; font-weight: bold; }
-    .new-badge { background: #2563eb; color: #fff; border-radius: 4px; padding: 1px 6px; font-size: 11px; }
-    ul { line-height: 1.9; }
-    a { color: #2563eb; }
+    .log-wrap details summary { cursor: pointer; font-weight: bold; color: #555; }
+    .log { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 6px;
+            white-space: pre-wrap; font-family: monospace; font-size: 12px;
+            max-height: 400px; overflow-y: auto; margin-top: 8px; }
+    ul { line-height: 1.8; }
   </style>
 </head>
 <body>
   <h1>📊 Active ETF Monitor</h1>
-  <p class="meta">最後更新：<strong>2026-03-02 03:23:54 UTC</strong>
-  &nbsp;&nbsp;</p>
+  <p class="meta">
+    最後執行時間：<strong>2026-03-02 03:25:20 UTC</strong>
+    &nbsp;&nbsp;
+    <span class="badge">❌ 執行錯誤</span>
+  </p>
 
-  <h2>目前持股（etf_holdings_20260302.csv）</h2>
-  <table>
-    <thead><tr>
-      <th>股票代碼</th><th>名稱</th><th>股數</th><th>權重 %</th><th>持倉金額 (NTD)</th>
-      <th>股數變動</th><th>進出金額</th><th>權重變動</th>
-    </tr></thead>
-    <tbody><tr>
-                  <td>2330 </td>
-                  <td>台積電</td>
-                  <td class='num'>2,992,000</td>
-                  <td class='num'>9.14%</td>
-                  <td class='num'>5,969,040,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2308 </td>
-                  <td>台達電</td>
-                  <td class='num'>3,093,000</td>
-                  <td class='num'>6.77%</td>
-                  <td class='num'>4,422,990,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2383 </td>
-                  <td>台光電</td>
-                  <td class='num'>1,809,000</td>
-                  <td class='num'>6.76%</td>
-                  <td class='num'>4,413,960,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3017 </td>
-                  <td>奇鋐</td>
-                  <td class='num'>2,352,000</td>
-                  <td class='num'>6.36%</td>
-                  <td class='num'>4,151,280,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2345 </td>
-                  <td>智邦</td>
-                  <td class='num'>2,625,000</td>
-                  <td class='num'>5.63%</td>
-                  <td class='num'>3,675,000,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>8299 </td>
-                  <td>群聯</td>
-                  <td class='num'>1,614,000</td>
-                  <td class='num'>4.67%</td>
-                  <td class='num'>3,050,460,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6223 </td>
-                  <td>旺矽</td>
-                  <td class='num'>1,024,000</td>
-                  <td class='num'>4.62%</td>
-                  <td class='num'>3,015,680,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6669 </td>
-                  <td>緯穎</td>
-                  <td class='num'>741,000</td>
-                  <td class='num'>4.54%</td>
-                  <td class='num'>2,964,000,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3653 </td>
-                  <td>健策</td>
-                  <td class='num'>940,000</td>
-                  <td class='num'>4.49%</td>
-                  <td class='num'>2,932,800,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6274 </td>
-                  <td>台燿</td>
-                  <td class='num'>4,965,000</td>
-                  <td class='num'>4.14%</td>
-                  <td class='num'>2,705,925,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3665 </td>
-                  <td>貿聯-KY</td>
-                  <td class='num'>1,841,848</td>
-                  <td class='num'>3.98%</td>
-                  <td class='num'>2,597,005,680</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>8046 </td>
-                  <td>南電</td>
-                  <td class='num'>4,559,000</td>
-                  <td class='num'>3.88%</td>
-                  <td class='num'>2,530,245,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3037 </td>
-                  <td>欣興</td>
-                  <td class='num'>5,190,000</td>
-                  <td class='num'>3.83%</td>
-                  <td class='num'>2,498,985,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2368 </td>
-                  <td>金像電</td>
-                  <td class='num'>2,887,000</td>
-                  <td class='num'>3.65%</td>
-                  <td class='num'>2,384,662,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2327 </td>
-                  <td>國巨*</td>
-                  <td class='num'>6,729,000</td>
-                  <td class='num'>3.07%</td>
-                  <td class='num'>2,005,242,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3661 </td>
-                  <td>世芯-KY</td>
-                  <td class='num'>559,000</td>
-                  <td class='num'>2.99%</td>
-                  <td class='num'>1,950,910,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6805 </td>
-                  <td>富世達</td>
-                  <td class='num'>1,094,000</td>
-                  <td class='num'>2.87%</td>
-                  <td class='num'>1,870,740,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>8210 </td>
-                  <td>勤誠</td>
-                  <td class='num'>1,563,000</td>
-                  <td class='num'>2.2%</td>
-                  <td class='num'>1,434,834,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>5274 </td>
-                  <td>信驊</td>
-                  <td class='num'>128,000</td>
-                  <td class='num'>1.91%</td>
-                  <td class='num'>1,245,440,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6515 </td>
-                  <td>穎崴</td>
-                  <td class='num'>231,000</td>
-                  <td class='num'>1.81%</td>
-                  <td class='num'>1,181,565,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6510 </td>
-                  <td>精測</td>
-                  <td class='num'>287,000</td>
-                  <td class='num'>1.65%</td>
-                  <td class='num'>1,076,250,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6139 </td>
-                  <td>亞翔</td>
-                  <td class='num'>1,653,000</td>
-                  <td class='num'>1.48%</td>
-                  <td class='num'>967,005,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2449 </td>
-                  <td>京元電子</td>
-                  <td class='num'>2,626,000</td>
-                  <td class='num'>1.32%</td>
-                  <td class='num'>858,702,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2404 </td>
-                  <td>漢唐</td>
-                  <td class='num'>535,000</td>
-                  <td class='num'>0.93%</td>
-                  <td class='num'>604,550,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>8358 </td>
-                  <td>金居</td>
-                  <td class='num'>1,826,000</td>
-                  <td class='num'>0.81%</td>
-                  <td class='num'>529,540,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3211 </td>
-                  <td>順達</td>
-                  <td class='num'>1,197,000</td>
-                  <td class='num'>0.57%</td>
-                  <td class='num'>370,471,500</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6191 </td>
-                  <td>精成科</td>
-                  <td class='num'>3,326,000</td>
-                  <td class='num'>0.56%</td>
-                  <td class='num'>362,534,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>1802 </td>
-                  <td>台玻</td>
-                  <td class='num'>5,996,000</td>
-                  <td class='num'>0.56%</td>
-                  <td class='num'>366,355,600</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>6488 </td>
-                  <td>環球晶</td>
-                  <td class='num'>786,000</td>
-                  <td class='num'>0.55%</td>
-                  <td class='num'>357,630,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>4979 </td>
-                  <td>華星光</td>
-                  <td class='num'>819,000</td>
-                  <td class='num'>0.53%</td>
-                  <td class='num'>345,208,500</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3376 </td>
-                  <td>新日興</td>
-                  <td class='num'>1,343,000</td>
-                  <td class='num'>0.43%</td>
-                  <td class='num'>278,001,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2317 </td>
-                  <td>鴻海</td>
-                  <td class='num'>863,000</td>
-                  <td class='num'>0.32%</td>
-                  <td class='num'>209,709,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>1319 </td>
-                  <td>東陽</td>
-                  <td class='num'>1,497,000</td>
-                  <td class='num'>0.23%</td>
-                  <td class='num'>149,400,600</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2002 </td>
-                  <td>中鋼</td>
-                  <td class='num'>4,923,000</td>
-                  <td class='num'>0.16%</td>
-                  <td class='num'>102,152,250</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3324 </td>
-                  <td>雙鴻</td>
-                  <td class='num'>76,000</td>
-                  <td class='num'>0.13%</td>
-                  <td class='num'>87,780,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3217 </td>
-                  <td>優群</td>
-                  <td class='num'>326,000</td>
-                  <td class='num'>0.08%</td>
-                  <td class='num'>50,856,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3008 </td>
-                  <td>大立光</td>
-                  <td class='num'>3,000</td>
-                  <td class='num'>0.01%</td>
-                  <td class='num'>7,560,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2059 </td>
-                  <td>川湖</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.01%</td>
-                  <td class='num'>3,445,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2357 </td>
-                  <td>華碩</td>
-                  <td class='num'>2,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>1,064,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>8996 </td>
-                  <td>高力</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>879,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>1815 </td>
-                  <td>富喬</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>110,500</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2439 </td>
-                  <td>美律</td>
-                  <td class='num'>2,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>189,200</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>1326 </td>
-                  <td>台化</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>51,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3533 </td>
-                  <td>嘉澤</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>1,775,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3045 </td>
-                  <td>台灣大</td>
-                  <td class='num'>2,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>215,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2454 </td>
-                  <td>聯發科</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>1,945,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>5536 </td>
-                  <td>聖暉*</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>723,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>2313 </td>
-                  <td>華通</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>204,500</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>1303 </td>
-                  <td>南亞</td>
-                  <td class='num'>1,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>91,800</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3583 </td>
-                  <td>辛耘</td>
-                  <td class='num'>2,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>742,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
-<tr>
-                  <td>3711 </td>
-                  <td>日月光投控</td>
-                  <td class='num'>2,000</td>
-                  <td class='num'>0.0%</td>
-                  <td class='num'>775,000</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0</td>
-                  <td class='num '>+0.00%</td>
-                </tr>
+  
+        <h2>目前持股 <small>(etf_holdings_20260302.csv)</small></h2>
+        <div class="table-wrap">
+        <table>
+          <thead><tr><th>stock_id</th><th>stock_name</th><th>shares</th><th>weight</th><th>amount</th></tr></thead>
+          <tbody><tr><td>2330</td><td>台積電</td><td>2992000.0</td><td>9.14</td><td>5969040000.0</td></tr>
+<tr><td>2308</td><td>台達電</td><td>3093000.0</td><td>6.77</td><td>4422990000.0</td></tr>
+<tr><td>2383</td><td>台光電</td><td>1809000.0</td><td>6.76</td><td>4413960000.0</td></tr>
+<tr><td>3017</td><td>奇鋐</td><td>2352000.0</td><td>6.36</td><td>4151280000.0</td></tr>
+<tr><td>2345</td><td>智邦</td><td>2625000.0</td><td>5.63</td><td>3675000000.0</td></tr>
+<tr><td>8299</td><td>群聯</td><td>1614000.0</td><td>4.67</td><td>3050460000.0</td></tr>
+<tr><td>6223</td><td>旺矽</td><td>1024000.0</td><td>4.62</td><td>3015680000.0</td></tr>
+<tr><td>6669</td><td>緯穎</td><td>741000.0</td><td>4.54</td><td>2964000000.0</td></tr>
+<tr><td>3653</td><td>健策</td><td>940000.0</td><td>4.49</td><td>2932800000.0</td></tr>
+<tr><td>6274</td><td>台燿</td><td>4965000.0</td><td>4.14</td><td>2705925000.0</td></tr>
+<tr><td>3665</td><td>貿聯-KY</td><td>1841848.0</td><td>3.98</td><td>2597005680.0</td></tr>
+<tr><td>8046</td><td>南電</td><td>4559000.0</td><td>3.88</td><td>2530245000.0</td></tr>
+<tr><td>3037</td><td>欣興</td><td>5190000.0</td><td>3.83</td><td>2498985000.0</td></tr>
+<tr><td>2368</td><td>金像電</td><td>2887000.0</td><td>3.65</td><td>2384662000.0</td></tr>
+<tr><td>2327</td><td>國巨*</td><td>6729000.0</td><td>3.07</td><td>2005242000.0</td></tr>
+<tr><td>3661</td><td>世芯-KY</td><td>559000.0</td><td>2.99</td><td>1950910000.0</td></tr>
+<tr><td>6805</td><td>富世達</td><td>1094000.0</td><td>2.87</td><td>1870740000.0</td></tr>
+<tr><td>8210</td><td>勤誠</td><td>1563000.0</td><td>2.2</td><td>1434834000.0</td></tr>
+<tr><td>5274</td><td>信驊</td><td>128000.0</td><td>1.91</td><td>1245440000.0</td></tr>
+<tr><td>6515</td><td>穎崴</td><td>231000.0</td><td>1.81</td><td>1181565000.0</td></tr>
+<tr><td>6510</td><td>精測</td><td>287000.0</td><td>1.65</td><td>1076250000.0</td></tr>
+<tr><td>6139</td><td>亞翔</td><td>1653000.0</td><td>1.48</td><td>967005000.0</td></tr>
+<tr><td>2449</td><td>京元電子</td><td>2626000.0</td><td>1.32</td><td>858702000.0</td></tr>
+<tr><td>2404</td><td>漢唐</td><td>535000.0</td><td>0.93</td><td>604550000.0</td></tr>
+<tr><td>8358</td><td>金居</td><td>1826000.0</td><td>0.81</td><td>529540000.0</td></tr>
+<tr><td>3211</td><td>順達</td><td>1197000.0</td><td>0.57</td><td>370471500.0</td></tr>
+<tr><td>6191</td><td>精成科</td><td>3326000.0</td><td>0.56</td><td>362534000.0</td></tr>
+<tr><td>1802</td><td>台玻</td><td>5996000.0</td><td>0.56</td><td>366355600.0</td></tr>
+<tr><td>6488</td><td>環球晶</td><td>786000.0</td><td>0.55</td><td>357630000.0</td></tr>
+<tr><td>4979</td><td>華星光</td><td>819000.0</td><td>0.53</td><td>345208500.0</td></tr>
+<tr><td>3376</td><td>新日興</td><td>1343000.0</td><td>0.43</td><td>278001000.0</td></tr>
+<tr><td>2317</td><td>鴻海</td><td>863000.0</td><td>0.32</td><td>209709000.0</td></tr>
+<tr><td>1319</td><td>東陽</td><td>1497000.0</td><td>0.23</td><td>149400600.0</td></tr>
+<tr><td>2002</td><td>中鋼</td><td>4923000.0</td><td>0.16</td><td>102152250.0</td></tr>
+<tr><td>3324</td><td>雙鴻</td><td>76000.0</td><td>0.13</td><td>87780000.0</td></tr>
+<tr><td>3217</td><td>優群</td><td>326000.0</td><td>0.08</td><td>50856000.0</td></tr>
+<tr><td>3008</td><td>大立光</td><td>3000.0</td><td>0.01</td><td>7560000.0</td></tr>
+<tr><td>2059</td><td>川湖</td><td>1000.0</td><td>0.01</td><td>3445000.0</td></tr>
+<tr><td>2357</td><td>華碩</td><td>2000.0</td><td>0.0</td><td>1064000.0</td></tr>
+<tr><td>8996</td><td>高力</td><td>1000.0</td><td>0.0</td><td>879000.0</td></tr>
+<tr><td>1815</td><td>富喬</td><td>1000.0</td><td>0.0</td><td>110500.0</td></tr>
+<tr><td>2439</td><td>美律</td><td>2000.0</td><td>0.0</td><td>189200.0</td></tr>
+<tr><td>1326</td><td>台化</td><td>1000.0</td><td>0.0</td><td>51000.0</td></tr>
+<tr><td>3533</td><td>嘉澤</td><td>1000.0</td><td>0.0</td><td>1775000.0</td></tr>
+<tr><td>3045</td><td>台灣大</td><td>2000.0</td><td>0.0</td><td>215000.0</td></tr>
+<tr><td>2454</td><td>聯發科</td><td>1000.0</td><td>0.0</td><td>1945000.0</td></tr>
+<tr><td>5536</td><td>聖暉*</td><td>1000.0</td><td>0.0</td><td>723000.0</td></tr>
+<tr><td>2313</td><td>華通</td><td>1000.0</td><td>0.0</td><td>204500.0</td></tr>
+<tr><td>1303</td><td>南亞</td><td>1000.0</td><td>0.0</td><td>91800.0</td></tr>
+<tr><td>3583</td><td>辛耘</td><td>2000.0</td><td>0.0</td><td>742000.0</td></tr>
+<tr><td>3711</td><td>日月光投控</td><td>2000.0</td><td>0.0</td><td>775000.0</td></tr>
 </tbody>
-  </table>
+        </table>
+        </div>
 
-  <h2>歷史比較報告</h2>
-  <ul><li>（累積兩天資料後自動產生）</li></ul>
+  <p><em>比較報告需累積兩天資料後自動產生。</em></p>
+
+  <div class="log-wrap">
+    <details>
+      <summary>執行日誌</summary>
+      <div class="log">Traceback (most recent call last):
+  File "/home/runner/work/etf-monitor2/etf-monitor2/monitor_active_etfs.py", line 517, in &lt;module&gt;
+    monitor_etfs()
+  File "/home/runner/work/etf-monitor2/etf-monitor2/monitor_active_etfs.py", line 175, in monitor_etfs
+    final_df = enrich_with_previous(final_df, df_prev)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/etf-monitor2/etf-monitor2/monitor_active_etfs.py", line 128, in enrich_with_previous
+    merged = curr.merge(prev, on='stock_id', how='left')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/frame.py", line 12884, in merge
+    return merge(
+           ^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 385, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 1031, in __init__
+    self._maybe_coerce_merge_keys()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 1835, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on str and int64 columns for key 'stock_id'. If you wish to proceed you should use pd.concat
+Starting Active ETF Monitor...
+Output directory: /home/runner/work/etf-monitor2/etf-monitor2/etf_data
+Processing 00981A...
+Fetching https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=49YTW... (This may take a moment)
+Successfully fetched 51 constituents for 00981A
+  stock_id stock_name     shares  weight        amount
+0     2330        台積電  2992000.0    9.14  5.969040e+09
+1     2308        台達電  3093000.0    6.77  4.422990e+09
+2     2383        台光電  1809000.0    6.76  4.413960e+09
+3     3017         奇鋐  2352000.0    6.36  4.151280e+09
+4     2345         智邦  2625000.0    5.63  3.675000e+09
+An unexpected error occurred: You are trying to merge on str and int64 columns for key 'stock_id'. If you wish to proceed you should use pd.concat
+Press Enter to exit...Traceback (most recent call last):
+  File "/home/runner/work/etf-monitor2/etf-monitor2/monitor_active_etfs.py", line 517, in &lt;module&gt;
+    monitor_etfs()
+  File "/home/runner/work/etf-monitor2/etf-monitor2/monitor_active_etfs.py", line 175, in monitor_etfs
+    final_df = enrich_with_previous(final_df, df_prev)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/etf-monitor2/etf-monitor2/monitor_active_etfs.py", line 128, in enrich_with_previous
+    merged = curr.merge(prev, on='stock_id', how='left')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/frame.py", line 12884, in merge
+    return merge(
+           ^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 385, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 1031, in __init__
+    self._maybe_coerce_merge_keys()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 1835, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on str and int64 columns for key 'stock_id'. If you wish to proceed you should use pd.concat
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/etf-monitor2/etf-monitor2/monitor_active_etfs.py", line 522, in &lt;module&gt;
+    input("Press Enter to exit...") # Keep window open if double clicked
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+</div>
+    </details>
+  </div>
 </body>
 </html>
