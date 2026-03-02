@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Active ETF Monitor</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; color: #333; }
+    h1 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
+    h2 { color: #555; margin-top: 30px; }
+    small { font-weight: normal; font-size: 0.75em; color: #888; }
+    .badge { display: inline-block; padding: 4px 14px; border-radius: 12px; color: white; background: #28a745; font-weight: bold; }
+    .meta { color: #666; margin: 10px 0 24px; }
+    .table-wrap { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 8px; }
+    th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+    th { background: #f5f5f5; }
+    tr:nth-child(even) { background: #fafafa; }
+    .log-wrap details summary { cursor: pointer; font-weight: bold; color: #555; }
+    .log { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 6px;
+            white-space: pre-wrap; font-family: monospace; font-size: 12px;
+            max-height: 400px; overflow-y: auto; margin-top: 8px; }
+    ul { line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <h1>📊 Active ETF Monitor</h1>
+  <p class="meta">
+    最後執行時間：<strong>2026-03-02 03:13:20 UTC</strong>
+    &nbsp;&nbsp;
+    <span class="badge">✅ 成功</span>
+  </p>
+
+  
+        <h2>目前持股 <small>(etf_holdings_20260302.csv)</small></h2>
+        <div class="table-wrap">
+        <table>
+          <thead><tr><th>stock_id</th><th>stock_name</th><th>shares</th><th>weight</th><th>amount</th></tr></thead>
+          <tbody><tr><td>2330</td><td>台積電</td><td>2992000.0</td><td>9.14</td><td>5969040000.0</td></tr>
+<tr><td>2308</td><td>台達電</td><td>3093000.0</td><td>6.77</td><td>4422990000.0</td></tr>
+<tr><td>2383</td><td>台光電</td><td>1809000.0</td><td>6.76</td><td>4413960000.0</td></tr>
+<tr><td>3017</td><td>奇鋐</td><td>2352000.0</td><td>6.36</td><td>4151280000.0</td></tr>
+<tr><td>2345</td><td>智邦</td><td>2625000.0</td><td>5.63</td><td>3675000000.0</td></tr>
+<tr><td>8299</td><td>群聯</td><td>1614000.0</td><td>4.67</td><td>3050460000.0</td></tr>
+<tr><td>6223</td><td>旺矽</td><td>1024000.0</td><td>4.62</td><td>3015680000.0</td></tr>
+<tr><td>6669</td><td>緯穎</td><td>741000.0</td><td>4.54</td><td>2964000000.0</td></tr>
+<tr><td>3653</td><td>健策</td><td>940000.0</td><td>4.49</td><td>2932800000.0</td></tr>
+<tr><td>6274</td><td>台燿</td><td>4965000.0</td><td>4.14</td><td>2705925000.0</td></tr>
+<tr><td>3665</td><td>貿聯-KY</td><td>1841848.0</td><td>3.98</td><td>2597005680.0</td></tr>
+<tr><td>8046</td><td>南電</td><td>4559000.0</td><td>3.88</td><td>2530245000.0</td></tr>
+<tr><td>3037</td><td>欣興</td><td>5190000.0</td><td>3.83</td><td>2498985000.0</td></tr>
+<tr><td>2368</td><td>金像電</td><td>2887000.0</td><td>3.65</td><td>2384662000.0</td></tr>
+<tr><td>2327</td><td>國巨*</td><td>6729000.0</td><td>3.07</td><td>2005242000.0</td></tr>
+<tr><td>3661</td><td>世芯-KY</td><td>559000.0</td><td>2.99</td><td>1950910000.0</td></tr>
+<tr><td>6805</td><td>富世達</td><td>1094000.0</td><td>2.87</td><td>1870740000.0</td></tr>
+<tr><td>8210</td><td>勤誠</td><td>1563000.0</td><td>2.2</td><td>1434834000.0</td></tr>
+<tr><td>5274</td><td>信驊</td><td>128000.0</td><td>1.91</td><td>1245440000.0</td></tr>
+<tr><td>6515</td><td>穎崴</td><td>231000.0</td><td>1.81</td><td>1181565000.0</td></tr>
+<tr><td>6510</td><td>精測</td><td>287000.0</td><td>1.65</td><td>1076250000.0</td></tr>
+<tr><td>6139</td><td>亞翔</td><td>1653000.0</td><td>1.48</td><td>967005000.0</td></tr>
+<tr><td>2449</td><td>京元電子</td><td>2626000.0</td><td>1.32</td><td>858702000.0</td></tr>
+<tr><td>2404</td><td>漢唐</td><td>535000.0</td><td>0.93</td><td>604550000.0</td></tr>
+<tr><td>8358</td><td>金居</td><td>1826000.0</td><td>0.81</td><td>529540000.0</td></tr>
+<tr><td>3211</td><td>順達</td><td>1197000.0</td><td>0.57</td><td>370471500.0</td></tr>
+<tr><td>6191</td><td>精成科</td><td>3326000.0</td><td>0.56</td><td>362534000.0</td></tr>
+<tr><td>1802</td><td>台玻</td><td>5996000.0</td><td>0.56</td><td>366355600.0</td></tr>
+<tr><td>6488</td><td>環球晶</td><td>786000.0</td><td>0.55</td><td>357630000.0</td></tr>
+<tr><td>4979</td><td>華星光</td><td>819000.0</td><td>0.53</td><td>345208500.0</td></tr>
+<tr><td>3376</td><td>新日興</td><td>1343000.0</td><td>0.43</td><td>278001000.0</td></tr>
+<tr><td>2317</td><td>鴻海</td><td>863000.0</td><td>0.32</td><td>209709000.0</td></tr>
+<tr><td>1319</td><td>東陽</td><td>1497000.0</td><td>0.23</td><td>149400600.0</td></tr>
+<tr><td>2002</td><td>中鋼</td><td>4923000.0</td><td>0.16</td><td>102152250.0</td></tr>
+<tr><td>3324</td><td>雙鴻</td><td>76000.0</td><td>0.13</td><td>87780000.0</td></tr>
+<tr><td>3217</td><td>優群</td><td>326000.0</td><td>0.08</td><td>50856000.0</td></tr>
+<tr><td>3008</td><td>大立光</td><td>3000.0</td><td>0.01</td><td>7560000.0</td></tr>
+<tr><td>2059</td><td>川湖</td><td>1000.0</td><td>0.01</td><td>3445000.0</td></tr>
+<tr><td>2357</td><td>華碩</td><td>2000.0</td><td>0.0</td><td>1064000.0</td></tr>
+<tr><td>8996</td><td>高力</td><td>1000.0</td><td>0.0</td><td>879000.0</td></tr>
+<tr><td>1815</td><td>富喬</td><td>1000.0</td><td>0.0</td><td>110500.0</td></tr>
+<tr><td>2439</td><td>美律</td><td>2000.0</td><td>0.0</td><td>189200.0</td></tr>
+<tr><td>1326</td><td>台化</td><td>1000.0</td><td>0.0</td><td>51000.0</td></tr>
+<tr><td>3533</td><td>嘉澤</td><td>1000.0</td><td>0.0</td><td>1775000.0</td></tr>
+<tr><td>3045</td><td>台灣大</td><td>2000.0</td><td>0.0</td><td>215000.0</td></tr>
+<tr><td>2454</td><td>聯發科</td><td>1000.0</td><td>0.0</td><td>1945000.0</td></tr>
+<tr><td>5536</td><td>聖暉*</td><td>1000.0</td><td>0.0</td><td>723000.0</td></tr>
+<tr><td>2313</td><td>華通</td><td>1000.0</td><td>0.0</td><td>204500.0</td></tr>
+<tr><td>1303</td><td>南亞</td><td>1000.0</td><td>0.0</td><td>91800.0</td></tr>
+<tr><td>3583</td><td>辛耘</td><td>2000.0</td><td>0.0</td><td>742000.0</td></tr>
+<tr><td>3711</td><td>日月光投控</td><td>2000.0</td><td>0.0</td><td>775000.0</td></tr>
+</tbody>
+        </table>
+        </div>
+
+  <p><em>比較報告需累積兩天資料後自動產生。</em></p>
+
+  <div class="log-wrap">
+    <details>
+      <summary>執行日誌</summary>
+      <div class="log">Starting Active ETF Monitor...
+Output directory: /home/runner/work/etf-monitor2/etf-monitor2/etf_data
+Processing 00981A...
+Fetching https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=49YTW... (This may take a moment)
+Successfully fetched 51 constituents for 00981A
+  stock_id stock_name     shares  weight        amount
+0     2330        台積電  2992000.0    9.14  5.969040e+09
+1     2308        台達電  3093000.0    6.77  4.422990e+09
+2     2383        台光電  1809000.0    6.76  4.413960e+09
+3     3017         奇鋐  2352000.0    6.36  4.151280e+09
+4     2345         智邦  2625000.0    5.63  3.675000e+09
+
+[SUCCESS] Saved combined data to: etf_data/etf_holdings_20260302.csv
+[INFO] Not enough history for comparison (need at least 2 days).
+</div>
+    </details>
+  </div>
+</body>
+</html>
