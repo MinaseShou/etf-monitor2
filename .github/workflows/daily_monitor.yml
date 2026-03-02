@@ -27,13 +27,140 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run ETF monitor
-        run: python monitor_active_etfs.py
+      - name: Run ETF monitor (with log capture)
+        run: python monitor_active_etfs.py 2>&1 | tee run_log.txt
+
+      - name: Generate GitHub Pages report
+        run: |
+          python - << 'PYEOF'
+          import os, glob, csv
+          from datetime import datetime
+
+          OUTPUT_DIR = "etf_data"
+          run_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
+
+          # Read execution log
+          log_text = ""
+          if os.path.exists("run_log.txt"):
+              with open("run_log.txt", encoding="utf-8") as f:
+                  log_text = f.read().replace("<", "&lt;").replace(">", "&gt;")
+
+          # Detect run status
+          status_label = "✅ 成功"
+          status_color = "#28a745"
+          if "[WARNING]" in log_text or "Failed" in log_text:
+              status_label = "⚠️ 部分失敗"
+              status_color = "#ffc107"
+          if "[ERROR]" in log_text or "Error" in log_text:
+              status_label = "❌ 執行錯誤"
+              status_color = "#dc3545"
+
+          # Find latest CSV
+          csv_files = sorted(glob.glob(f"{OUTPUT_DIR}/etf_holdings_*.csv"))
+          holdings_html = ""
+          latest_csv_name = ""
+          if csv_files:
+              latest_csv = csv_files[-1]
+              latest_csv_name = os.path.basename(latest_csv)
+              rows = []
+              with open(latest_csv, encoding="utf-8-sig") as f:
+                  reader = csv.DictReader(f)
+                  for row in reader:
+                      rows.append(row)
+              if rows:
+                  headers = list(rows[0].keys())
+                  header_row = "".join(f"<th>{h}</th>" for h in headers)
+                  body_rows = ""
+                  for r in rows:
+                      cells = "".join(f"<td>{r.get(h,'')}</td>" for h in headers)
+                      body_rows += f"<tr>{cells}</tr>\n"
+                  holdings_html = f"""
+                  <h2>目前持股 <small>({latest_csv_name})</small></h2>
+                  <div class="table-wrap">
+                  <table>
+                    <thead><tr>{header_row}</tr></thead>
+                    <tbody>{body_rows}</tbody>
+                  </table>
+                  </div>"""
+          else:
+              holdings_html = "<p>尚無持股資料，請等待首次執行完成。</p>"
+
+          # Find comparison reports
+          report_files = sorted(glob.glob(f"{OUTPUT_DIR}/report_*.html"), reverse=True)
+          reports_html = ""
+          if report_files:
+              links = "".join(
+                  f'<li><a href="{f}">{os.path.basename(f)}</a></li>'
+                  for f in report_files[:10]
+              )
+              reports_html = f"<h2>比較報告記錄</h2><ul>{links}</ul>"
+          else:
+              reports_html = "<p><em>比較報告需累積兩天資料後自動產生。</em></p>"
+
+          html = f"""<!DOCTYPE html>
+          <html lang="zh-TW">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Active ETF Monitor</title>
+            <style>
+              body {{ font-family: Arial, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; color: #333; }}
+              h1 {{ border-bottom: 2px solid #eee; padding-bottom: 10px; }}
+              h2 {{ color: #555; margin-top: 30px; }}
+              small {{ font-weight: normal; font-size: 0.75em; color: #888; }}
+              .badge {{ display: inline-block; padding: 4px 14px; border-radius: 12px; color: white; background: {status_color}; font-weight: bold; }}
+              .meta {{ color: #666; margin: 10px 0 24px; }}
+              .table-wrap {{ overflow-x: auto; }}
+              table {{ border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 8px; }}
+              th, td {{ border: 1px solid #ddd; padding: 8px 12px; text-align: left; }}
+              th {{ background: #f5f5f5; }}
+              tr:nth-child(even) {{ background: #fafafa; }}
+              .log-wrap details summary {{ cursor: pointer; font-weight: bold; color: #555; }}
+              .log {{ background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 6px;
+                      white-space: pre-wrap; font-family: monospace; font-size: 12px;
+                      max-height: 400px; overflow-y: auto; margin-top: 8px; }}
+              ul {{ line-height: 1.8; }}
+            </style>
+          </head>
+          <body>
+            <h1>📊 Active ETF Monitor</h1>
+            <p class="meta">
+              最後執行時間：<strong>{run_time}</strong>
+              &nbsp;&nbsp;
+              <span class="badge">{status_label}</span>
+            </p>
+
+            {holdings_html}
+
+            {reports_html}
+
+            <div class="log-wrap">
+              <details>
+                <summary>執行日誌</summary>
+                <div class="log">{log_text}</div>
+              </details>
+            </div>
+          </body>
+          </html>
+          """
+
+          with open("index.html", "w", encoding="utf-8") as f:
+              f.write(html)
+
+          print("index.html generated successfully")
+          PYEOF
+
+      - name: Upload execution log as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-log-${{ github.run_number }}
+          path: run_log.txt
+          retention-days: 30
 
       - name: Commit and push results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add etf_data/ index.html || true
+          git add etf_data/ index.html
           git diff --cached --quiet || git commit -m "chore: update ETF data $(date +'%Y-%m-%d')"
           git push origin main
