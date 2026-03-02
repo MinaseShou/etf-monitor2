@@ -119,12 +119,15 @@ def enrich_with_previous(curr_df, prev_df=None):
         curr['shares_change'] = 0.0
         curr['weight_change'] = 0.0
     else:
+        # Normalise stock_id to str so int64 (from CSV) and str (from scraper) can merge
+        curr['stock_id'] = curr['stock_id'].astype(str)
         # Only use the core price/share columns from prev to avoid picking up stale enrichment cols
         prev = prev_df[['stock_id', 'amount', 'shares', 'weight']].rename(columns={
             'amount': 'prev_amount',
             'shares': 'prev_shares',
             'weight': 'prev_weight',
         })
+        prev['stock_id'] = prev['stock_id'].astype(str)
         merged = curr.merge(prev, on='stock_id', how='left')
         curr['is_new']        = merged['prev_amount'].isna()
         curr['amount_change'] = (merged['amount'] - merged['prev_amount'].fillna(0)).round(0)
@@ -220,8 +223,12 @@ def compare_holdings(df_curr, df_prev):
     etfs = df_curr['ETF'].unique()
 
     for etf in etfs:
-        curr_etf = df_curr[df_curr['ETF'] == etf].set_index('stock_id')
-        prev_etf = df_prev[df_prev['ETF'] == etf].set_index('stock_id')
+        curr_etf = df_curr[df_curr['ETF'] == etf].copy()
+        prev_etf = df_prev[df_prev['ETF'] == etf].copy()
+        curr_etf['stock_id'] = curr_etf['stock_id'].astype(str)
+        prev_etf['stock_id'] = prev_etf['stock_id'].astype(str)
+        curr_etf = curr_etf.set_index('stock_id')
+        prev_etf = prev_etf.set_index('stock_id')
 
         # New Positions
         new_stocks = curr_etf.index.difference(prev_etf.index)

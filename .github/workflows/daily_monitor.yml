@@ -45,15 +45,46 @@ jobs:
               with open("run_log.txt", encoding="utf-8") as f:
                   log_text = f.read().replace("<", "&lt;").replace(">", "&gt;")
 
-          # Detect run status
+          # Detect run status (match structured log tags only, not Python exception class names)
           status_label = "✅ 成功"
           status_color = "#28a745"
-          if "[WARNING]" in log_text or "Failed" in log_text:
+          if "[WARNING]" in log_text or "Failed to fetch" in log_text:
               status_label = "⚠️ 部分失敗"
               status_color = "#ffc107"
-          if "[ERROR]" in log_text or "Error" in log_text:
+          if "[ERROR]" in log_text or "Traceback (most recent" in log_text:
               status_label = "❌ 執行錯誤"
               status_color = "#dc3545"
+
+          # Column display configuration
+          COLUMN_NAMES = {
+              'stock_id': '股票代碼', 'stock_name': '名稱',
+              'shares': '股數', 'weight': '權重 %', 'amount': '持倉金額 (NTD)',
+              'shares_change': '股數變動', 'amount_change': '進出金額 (NTD)', 'weight_change': '權重變動',
+          }
+          SKIP_COLS = {'ETF', 'is_new'}
+          DISPLAY_ORDER = ['stock_id', 'stock_name', 'shares', 'weight', 'amount',
+                           'shares_change', 'amount_change', 'weight_change']
+          CHANGE_COLS = {'shares_change', 'amount_change', 'weight_change'}
+
+          def fmt_cell(val, col):
+              try:
+                  v = float(val)
+                  if col == 'weight':
+                      return f"{v:.2f}%"
+                  elif col == 'weight_change':
+                      s = f"{v:+.4f}%"
+                  elif col in ('amount', 'amount_change'):
+                      s = f"{v:+,.0f}" if col == 'amount_change' else f"{v:,.0f}"
+                  elif col in ('shares', 'shares_change'):
+                      s = f"{v:+,.0f}" if col == 'shares_change' else f"{v:,.0f}"
+                  else:
+                      return str(val)
+                  if col in CHANGE_COLS:
+                      color = '#28a745' if v > 0 else ('#dc3545' if v < 0 else '#888')
+                      return f'<span style="color:{color};font-weight:bold">{s}</span>'
+                  return s
+              except (ValueError, TypeError):
+                  return str(val) if val else '-'
 
           # Find latest CSV
           csv_files = sorted(glob.glob(f"{OUTPUT_DIR}/etf_holdings_*.csv"))
@@ -68,11 +99,12 @@ jobs:
                   for row in reader:
                       rows.append(row)
               if rows:
-                  headers = list(rows[0].keys())
-                  header_row = "".join(f"<th>{h}</th>" for h in headers)
+                  all_keys = list(rows[0].keys())
+                  show_cols = [h for h in DISPLAY_ORDER if h in all_keys]
+                  header_row = "".join(f"<th>{COLUMN_NAMES.get(h, h)}</th>" for h in show_cols)
                   body_rows = ""
                   for r in rows:
-                      cells = "".join(f"<td>{r.get(h,'')}</td>" for h in headers)
+                      cells = "".join(f"<td>{fmt_cell(r.get(h,''), h)}</td>" for h in show_cols)
                       body_rows += f"<tr>{cells}</tr>\n"
                   holdings_html = f"""
                   <h2>目前持股 <small>({latest_csv_name})</small></h2>
